@@ -1,24 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
-import os
-import sys
 import uvicorn
 
-# Add the project root to sys.path if needed
-current_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_dir, ".."))
-
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-
-# Import routers
-try:
-    from backend.summarizer import router as summarizer_router
-    from backend.auth import router as auth_router
-except ModuleNotFoundError:
-    from backend.summarizer import router as summarizer_router
-    from auth import router as auth_router
+# Import routers directly (assuming summarizer.py and auth.py are in the same folder as main.py)
+from summarizer import router as summarizer_router
+from auth import router as auth_router
 
 # Create FastAPI app instance
 app = FastAPI()
@@ -35,7 +22,7 @@ def health_check():
 # CORS middleware setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080"],  # Adjust this for production
+    allow_origins=["*"],  # allow all origins in Railway; adjust for prod
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,7 +31,6 @@ app.add_middleware(
 # Include routers after app initialization
 app.include_router(summarizer_router)
 app.include_router(auth_router, prefix="/api")
-
 
 # OpenAPI customization (if needed)
 def custom_openapi():
@@ -70,3 +56,6 @@ def custom_openapi():
     return app.openapi_schema
 
 app.openapi = custom_openapi
+
+if _name_ == "_main_":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
