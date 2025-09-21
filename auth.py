@@ -5,7 +5,7 @@ from passlib.context import CryptContext
 from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordBearer
 
-from backend.models import User, SessionLocal
+from models import User, SessionLocal
 
 SECRET_KEY = "dkJ29kS98sKf3iXn5q1WzMf29vNslqXo87FsA1CzZLpX"  # Use env var in production
 ALGORITHM = "HS256"
