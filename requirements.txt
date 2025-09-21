@@ -1,0 +1,32 @@
+# Core backend framework
+fastapi
+uvicorn
+
+# LangChain core and community packages
+langchain
+langchain-community
+langchain-google-genai
+
+# Google Gemini AI
+google-generativeai
+
+# Cohere for embeddings
+cohere
+
+# PDF reading and text processing
+pypdf
+faiss-cpu
+
+# File upload
+python-multipart
+
+# Authentication
+sqlalchemy
+passlib[bcrypt]
+python-jose
+bcrypt==4.1.2
+passlib==1.7.4
+
+# Environment and utilities
+python-dotenv
+google
